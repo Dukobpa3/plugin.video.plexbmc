@@ -11,7 +11,7 @@ printDebug = PrintDebug("PleXBMC", "CommandSwitchUser")
 
 class CommandSwitchUser(BaseCommand):
     def __init__(self, *args):
-        super(CommandSwitchUser, self).__init__(args)
+        super(CommandSwitchUser, self).__init__(*args)
 
     def execute(self):
         if _switch_user():

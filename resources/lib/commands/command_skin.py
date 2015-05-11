@@ -11,7 +11,7 @@ printDebug = PrintDebug("PleXBMC", "CommandSkin")
 
 class CommandSkin(BaseCommand):
     def __init__(self, *args):
-        super(CommandSkin, self).__init__(args)
+        super(CommandSkin, self).__init__(*args)
         return
 
     def execute(self):

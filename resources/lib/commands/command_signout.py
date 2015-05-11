@@ -8,7 +8,7 @@ from ..utils import clear_shelf, clear_skin_sections, clear_on_deck_shelf
 
 class CommandSignout(BaseCommand):
     def __init__(self, *args):
-        super(CommandSignout, self).__init__(args)
+        super(CommandSignout, self).__init__(*args)
 
     def execute(self):
         if not plex_network.is_admin():

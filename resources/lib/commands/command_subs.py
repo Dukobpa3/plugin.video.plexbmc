@@ -9,7 +9,7 @@ printDebug = PrintDebug("PleXBMC", "CommandSubs")
 
 class CommandSubs(BaseCommand):
     def __init__(self, *args):
-        super(CommandSubs, self).__init__(args)
+        super(CommandSubs, self).__init__(*args)
 
     def execute(self):
         plex_network.load()

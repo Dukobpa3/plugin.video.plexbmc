@@ -9,7 +9,7 @@ printDebug = PrintDebug("PleXBMC", "CommandSettings")
 
 class CommandSettings(BaseCommand):
     def __init__(self, *args):
-        super(CommandSettings, self).__init__(args)
+        super(CommandSettings, self).__init__(*args)
 
     def execute(self):
         settings.open_settings()

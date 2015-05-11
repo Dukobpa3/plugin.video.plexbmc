@@ -8,7 +8,7 @@ from ..myplex_dialogs import PlexManageDialog
 
 class CommandManageMyPlex(BaseCommand):
     def __init__(self, *args):
-        super(CommandManageMyPlex, self).__init__(args)
+        super(CommandManageMyPlex, self).__init__(*args)
 
     def execute(self):
         if not plex_network.is_myplex_signedin():

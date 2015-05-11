@@ -5,7 +5,7 @@ from ..plexserver import plex_network
 
 class CommandCacheRefresh(BaseCommand):
     def __init__(self, *args):
-        super(CommandCacheRefresh, self).__init__(args)
+        super(CommandCacheRefresh, self).__init__(*args)
         return
 
     def execute(self):

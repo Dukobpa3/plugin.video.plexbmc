@@ -13,7 +13,7 @@ printDebug = PrintDebug("PlexBMC", "CommandShelf")
 
 class CommandShelf(BaseCommand):
     def __init__(self, *args):
-        super(CommandShelf, self).__init__(args)
+        super(CommandShelf, self).__init__(*args)
         return
 
     def execute(self):
