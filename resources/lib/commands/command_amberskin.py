@@ -15,7 +15,7 @@ printDebug = PrintDebug("PleXBMC", "CommandAmberSkin")
 
 class CommandAmberSkin(BaseCommand):
     def __init__(self, *args):
-        super(CommandAmberSkin, self).__init__(args)
+        super(CommandAmberSkin, self).__init__(*args)
         return
 
     def execute(self):
@@ -626,7 +626,7 @@ def _get_shelf_thumb(data, server, season_thumb=False, prefer_season=False, widt
             return server.get_kodi_header_formatted_url('/photo/:/transcode?url=%s&width=%s&height=%s' % (
                 urllib.quote_plus('http://localhost:32400' + thumbnail), width, height))
 
-    return GlobalEnum.GENERIC_THUMBNAIL
+    return GENERIC_THUMBNAIL
 
 
 def _clear_queue_shelf(queueCount=0):

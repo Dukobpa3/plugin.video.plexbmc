@@ -13,7 +13,7 @@ args = sys.argv[2:]
 command = COMMANDS.get(command_name)
 if command and issubclass(command, BaseCommand):
     print "executing command: %s; with args: %s" % (command, args)
-    command(args).execute()
+    command(*args).execute()
 
 print "===== PlexBMC STOP [id: %s]: %s seconds =====" % (plexbmc_start, (time.time() - plexbmc_start))
 sys.modules.clear()

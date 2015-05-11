@@ -9,7 +9,7 @@ printDebug = PrintDebug("PleXBMC", "CommandMaster")
 
 class CommandMaster(BaseCommand):
     def __init__(self, *args):
-        super(CommandMaster, self).__init__(args)
+        super(CommandMaster, self).__init__(*args)
 
     def execute(self):
         plex_network.load()

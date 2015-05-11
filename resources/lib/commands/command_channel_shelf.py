@@ -12,7 +12,7 @@ printDebug = PrintDebug("PleXBMC", "CommandChannelShelf")
 
 class CommandChannelShelf(BaseCommand):
     def __init__(self, *args):
-        super(CommandChannelShelf, self).__init__(args)
+        super(CommandChannelShelf, self).__init__(*args)
 
     def execute(self):
         plex_network.load()

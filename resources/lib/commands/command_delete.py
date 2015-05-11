@@ -10,7 +10,7 @@ printDebug = PrintDebug("PleXBMC", "CommandDelete")
 
 class CommandDelete(BaseCommand):
     def __init__(self, *args):
-        super(CommandDelete, self).__init__(args)
+        super(CommandDelete, self).__init__(*args)
 
     def execute(self):
         plex_network.load()
