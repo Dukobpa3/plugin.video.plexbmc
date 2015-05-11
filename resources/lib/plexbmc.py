@@ -239,7 +239,7 @@ def addGUIItem(url, details, extraData, context=None, folder=True):
 
     return xbmcplugin.addDirectoryItem(handle=pluginhandle,url=link_url,listitem=liz,isFolder=folder)
 
-def displaySections( filter=None, display_shared=False ):
+def displaySections( content_filter=None, display_shared=False ):
     printDebug.debug("== ENTER ==")
     xbmcplugin.setContent(pluginhandle, 'files')
 
@@ -269,22 +269,22 @@ def displaySections( filter=None, display_shared=False ):
 
             if section.is_show():
                 mode=Mode.TVSHOWS
-                if (filter is not None) and (filter != "tvshows"):
+                if (content_filter is not None) and (content_filter != "tvshows"):
                     continue
 
             elif section.is_movie():
                 mode=Mode.MOVIES
-                if (filter is not None) and (filter != "movies"):
+                if (content_filter is not None) and (content_filter != "movies"):
                     continue
 
             elif section.is_artist():
                 mode=Mode.ARTISTS
-                if (filter is not None) and (filter != "music"):
+                if (content_filter is not None) and (content_filter != "music"):
                     continue
 
             elif section.is_photo():
                 mode=Mode.PHOTOS
-                if (filter is not None) and (filter != "photos"):
+                if (content_filter is not None) and (content_filter != "photos"):
                     continue
             else:
                 printDebug.debug("Ignoring section %s of type %s as unable to process" % ( details['title'], section.get_type() ) )
@@ -293,7 +293,7 @@ def displaySections( filter=None, display_shared=False ):
             if settings.get_setting('secondary'):
                 mode=Mode.GETCONTENT
             else:
-                path=path+'/all'
+                path += '/all'
 
             extraData['mode']=mode
             section_url='%s%s' % ( server.get_url_location(), path)
@@ -321,20 +321,20 @@ def displaySections( filter=None, display_shared=False ):
             continue
 
         #Plex plugin handling
-        if (filter is not None) and (filter != "plugins"):
+        if (content_filter is not None) and (content_filter != "plugins"):
             continue
 
         if len(server_list) > 1:
-            prefix=server.get_name()+": "
+            prefix = server.get_name() + ": "
         else:
-            prefix=""
+            prefix = ""
 
-        details={'title' : prefix+"Channels" }
-        extraData={'type' : "Video"}
+        details = {'title': prefix + "Channels"}
+        extraData = {'type': "Video"}
 
-        extraData['mode']=Mode.CHANNELVIEW
-        u="%s/channels/all" % server.get_url_location()
-        addGUIItem(u,details,extraData)
+        extraData['mode'] = Mode.CHANNELVIEW
+        u = "%s/channels/all" % server.get_url_location()
+        addGUIItem(u, details, extraData)
 
         #Create plexonline link
         details['title']=prefix+"Plex Online"
@@ -2605,8 +2605,37 @@ def start_plexbmc():
         print "PleXBMC -> identifier: %s" % param_identifier
 
     # Run a function based on the mode variable that was passed in the URL
+
+    # displaySections
     if (mode is None) or (param_url is None) or (len(param_url) < 1):
-        displaySections()
+        displaySections(content_filter=None, display_shared=False)
+
+    elif mode == Mode.SHARED_ALL:
+        displaySections(content_filter=None, display_shared=True)
+
+    elif mode == Mode.SHARED_MOVIES:
+        displaySections(content_filter="movies", display_shared=True)
+
+    elif mode == Mode.SHARED_SHOWS:
+        displaySections(content_filter="tvshows", display_shared=True)
+
+    elif mode == Mode.SHARED_PHOTOS:
+        displaySections(content_filter="photos", display_shared=True)
+
+    elif mode == Mode.SHARED_MUSIC:
+        displaySections(content_filter="music", display_shared=True)
+    # end displaySections
+
+    # playLibraryMedia
+    elif mode == Mode.PLAYLIBRARY:
+        playLibraryMedia(param_url, force=force, override=play_transcode)
+
+    elif mode == Mode.PLAYSHELF:
+        playLibraryMedia(param_url, full_data=True, shelf=True)
+
+    elif mode == Mode.PLAYLIBRARY_TRANSCODE:
+        playLibraryMedia(param_url, override=True)
+    # end playLibraryMedia
 
     elif mode == Mode.GETCONTENT:
         getContent(param_url)
@@ -2622,12 +2651,6 @@ def start_plexbmc():
 
     elif mode == Mode.TVSEASONS:
         TVSeasons(param_url)
-
-    elif mode == Mode.PLAYLIBRARY:
-        playLibraryMedia(param_url, force=force, override=play_transcode)
-
-    elif mode == Mode.PLAYSHELF:
-        playLibraryMedia(param_url, full_data=True, shelf=True)
 
     elif mode == Mode.TVEPISODES:
         TVEpisodes(param_url)
@@ -2665,9 +2688,6 @@ def start_plexbmc():
     elif mode == Mode.CHANNELVIEW:
         channelView(param_url)
 
-    elif mode == Mode.PLAYLIBRARY_TRANSCODE:
-        playLibraryMedia(param_url, override=True)
-
     elif mode == Mode.MYPLEXQUEUE:
         myPlexQueue()
 
@@ -2676,21 +2696,6 @@ def start_plexbmc():
 
     elif mode == Mode.CHANNELPREFS:
         channelSettings(param_url, params.get('id'))
-
-    elif mode == Mode.SHARED_MOVIES:
-        displaySections(filter="movies", display_shared=True)
-
-    elif mode == Mode.SHARED_SHOWS:
-        displaySections(filter="tvshows", display_shared=True)
-
-    elif mode == Mode.SHARED_PHOTOS:
-        displaySections(filter="photos", display_shared=True)
-
-    elif mode == Mode.SHARED_MUSIC:
-        displaySections(filter="music", display_shared=True)
-
-    elif mode == Mode.SHARED_ALL:
-        displaySections(display_shared=True)
 
     elif mode == Mode.DELETE_REFRESH:
         plex_network.delete_cache()
