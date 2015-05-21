@@ -504,7 +504,7 @@ def _full_shelf(server_list=None):
 
         printDebug.debug(
             " Building Recent window title: %s\n    Building Recent window url: %s\n    Building Recent window thumb: %s" % (
-                title_name, title_url, title_thumb))
+                str(title_name), str(title_url), str(title_thumb)))
 
     clear_shelf(recentMovieCount, recentSeasonCount, recentMusicCount, recentPhotoCount)
 
